@@ -8,8 +8,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const inventoryRouter = require("./routes/inventory.route.js");
-app.use("/inventory", inventoryRouter);
+app.use("/inventory", require("./routes/inventory.route.js"));
+app.use("/warehouse", require("./routes/warehouse.route"));
 
 const connectToMongo = async () => {
   try {
@@ -50,11 +50,12 @@ async function saveOrUpdate() {
   //   warehouse.city = "Detroit";
   //   await warehouse.save();
 }
-saveOrUpdate();
+// saveOrUpdate();
 
 async function findWarehouse() {
   try {
     const warehouse = await Warehouse.findById("634066bb0d84e8cf334ef4ea");
+    console.low(warehouse);
   } catch (e) {
     console.log(e.message);
   }
