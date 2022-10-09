@@ -10,6 +10,7 @@ const itemSchema = new Schema({
       message: (props) => `${props.value} needs to have more than 1 character`,
     },
   },
+  status: String,
   sku: String,
   volume: Number,
   volumeUnits: String,
@@ -26,3 +27,9 @@ const itemSchema = new Schema({
     default: () => Date.now(),
   },
 });
+
+itemSchema.virtual("id").get(function () {
+  return this._id;
+});
+
+module.exports = mongoose.model("Item", itemSchema);

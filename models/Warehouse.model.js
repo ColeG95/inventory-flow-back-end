@@ -21,8 +21,33 @@ const warehouseSchema = new Schema({
   manager: String,
   phone: { type: String, default: "8002223333" },
   inventory: [itemSummarySchema],
-  // referenceToAnotherMongoObject: mongoose.SchemaTypes.ObjectId,
+  referenceToAnotherMongoObject: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: "Warehouse",
+  },
 });
+
+// warehouseSchema.methods.sayHi = function() {
+//     console.log(`Hi my name is ${this.name}`)
+// }
+
+// warehouseSchema.statics.findByCity = function(city) {
+//     return this.find({city: new RegExp(city, "i")})
+// }
+
+// warehouseSchema.query.byCity = function(city) {
+//     return this.where({city: new RegExp(city, "i")})
+// }
+
+// warehouseSchema.virtual("volumeLeft").get(function() {
+//     return this.volumeCapacity - this.somethingElse
+// })
+
+// middleware. Do something before a specified action. i.e. assign value before save() is called.
+// warehouseSchema.pre("save", function(next) {
+//     this.updatedAt = Date.now()
+//     next()
+// })
 
 module.exports = mongoose.model("Warehouse", warehouseSchema);
 
