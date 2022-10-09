@@ -26,4 +26,30 @@ async function createItem(itemToSave) {
   }
 }
 
-module.exports = { findAllItems, findItemById, createItem };
+async function updateItem(id, updatedItem) {
+  try {
+    let item = await Item.findByIdAndUpdate(id, {
+      ...updatedItem,
+      updatedAt: Date.now(),
+    });
+    return item;
+  } catch (e) {
+    throw e;
+  }
+}
+
+async function deleteItemById(id) {
+  try {
+    await Item.findByIdAndDelete(id);
+  } catch (e) {
+    throw e;
+  }
+}
+
+module.exports = {
+  findAllItems,
+  findItemById,
+  createItem,
+  updateItem,
+  deleteItemById,
+};

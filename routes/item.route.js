@@ -4,6 +4,8 @@ const {
   createItem,
   findAllItems,
   findItemById,
+  updateItem,
+  deleteItemById,
 } = require("../controllers/item.controller");
 
 const validateObjectId = (req, res, next) => {
@@ -14,10 +16,25 @@ const validateObjectId = (req, res, next) => {
   }
 };
 
+router.get("/", async (req, res) => {
+  const items = await findAllItems();
+  res.json(items);
+});
+
 router.post("/", async (req, res) => {
   try {
     const item = await createItem(req.body);
     res.status(201).json(item);
+  } catch (e) {
+    console.log(e);
+    res.status(e?.status ?? 500).json(e);
+  }
+});
+
+router.put("/:id", async (req, res) => {
+  try {
+    const updatedItem = await updateItem(req.params.id, req.body);
+    res.status(200).json(updatedItem);
   } catch (e) {
     console.log(e);
     res.status(e?.status ?? 500).json(e);
