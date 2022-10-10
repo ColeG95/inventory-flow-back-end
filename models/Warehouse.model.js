@@ -27,6 +27,18 @@ const warehouseSchema = new Schema({
   },
 });
 
+warehouseSchema.virtual("id").get(function () {
+  return this._id.toHexString();
+});
+
+warehouseSchema.set("toJSON", {
+  virtuals: true,
+  versionKey: false,
+  transform: function (doc, ret) {
+    delete ret._id;
+  },
+});
+
 // warehouseSchema.methods.sayHi = function() {
 //     console.log(`Hi my name is ${this.name}`)
 // }

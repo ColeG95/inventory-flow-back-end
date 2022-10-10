@@ -8,7 +8,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/inventory", require("./routes/inventory.route.js"));
 app.use("/warehouse", require("./routes/warehouse.route"));
 app.use("/item", require("./routes/item.route"));
 

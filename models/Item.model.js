@@ -14,17 +14,17 @@ const itemSchema = new Schema({
   status: String,
   sku: {
     type: String,
-    // default: () => {
-    //   if (this.name === "Monitor") {
-    //     return "123";
-    //   } else if (this.name === "Chair") {
-    //     return "124";
-    //   } else if (this.name === "Desk") {
-    //     return "125";
-    //   } else {
-    //     return "";
-    //   }
-    // },
+    default: () => {
+      if (this.name === "Monitor") {
+        return "123";
+      } else if (this.name === "Chair") {
+        return "124";
+      } else if (this.name === "Desk") {
+        return "125";
+      } else {
+        return "";
+      }
+    },
   },
   volume: Number,
   volumeUnits: String,
@@ -52,6 +52,21 @@ itemSchema.set("toJSON", {
   transform: function (doc, ret) {
     delete ret._id;
   },
+});
+
+itemSchema.pre("create", function (next) {
+  let mySku;
+  if (this.name === "Monitor") {
+    mySku = "123";
+  } else if (this.name === "Chair") {
+    mySku = "124";
+  } else if (this.name === "Desk") {
+    mySku = "125";
+  } else {
+    mySku = "";
+  }
+  this.sku = mySku;
+  next();
 });
 
 module.exports = mongoose.model("Item", itemSchema);
